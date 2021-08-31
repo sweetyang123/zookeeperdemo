@@ -8,6 +8,14 @@ import java.util.concurrent.CountDownLatch;
 public class DefautWatcher implements Watcher {
     CountDownLatch cc= new CountDownLatch(1);
 
+    public CountDownLatch getCc() {
+        return cc;
+    }
+
+    public void setCc(CountDownLatch cc) {
+        this.cc = cc;
+    }
+
     @Override
     public void process(WatchedEvent event) {
         switch (event.getState()) {

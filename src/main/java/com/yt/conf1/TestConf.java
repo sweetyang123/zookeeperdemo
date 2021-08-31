@@ -13,10 +13,18 @@ public class TestConf {
     }
     @After
     public void close(){
-
+        try {
+            zk.close();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
     @Test
     public void testConf(){
-
+        WatchCallBack wb = new WatchCallBack();
+        wb.setZk(zk);
+        MyConf conf = new MyConf();
+        wb.setConf(conf);
+        wb.await();
     }
 }
