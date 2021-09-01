@@ -1,5 +1,6 @@
-package com.yt.lock;
+package com.yt.lock1;
 
+import com.yt.lock.ZKUtils;
 import org.apache.zookeeper.ZooKeeper;
 import org.junit.After;
 import org.junit.Before;
@@ -21,31 +22,23 @@ public class TestLock {
     }
     @Test
     public void testLock(){
-        //十个线程竞争锁
         for (int i = 0; i <10 ; i++) {
             new Thread(){
                 @Override
                 public void run() {
-                    //尝试获取锁
-                    WatchCallBack wcb = new WatchCallBack();
-                    String threadName = Thread.currentThread().getName();
-                    wcb.setZk(zk);
-                    wcb.setThreadName(threadName);
-                    System.out.println("threadName："+threadName);
-                    wcb.tryLock();
-                    //业务
+                    WatchCallBack wc = new WatchCallBack();
+                    wc.setZk(zk);
+                    wc.setThreadName(Thread.currentThread().getName());
+                    wc.tryLock();
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //释放锁
-                    wcb.unLock();
+                    wc.unLock();
                 }
             }.start();
         }
-        while (true){
 
-        }
     }
 }
